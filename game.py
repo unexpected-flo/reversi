@@ -9,7 +9,7 @@ class Player:
         self.color = color
         self.human = human
         if not human:
-            self.cpu = computer.ai_types[ai_selected](color=self.color, *ai_args)
+            self.cpu = computer.ai_types[ai_selected](*ai_args)
 
     def select_move(self, board, window):
         if self.human:
@@ -97,8 +97,8 @@ class Game:
 
 
 if __name__ == "__main__":
-    player_1 = Player("Black", False, "random", [])
-    player_2 = Player("White", False, "random", [])
+    player_1 = Player("Black", False, "minimax", ["Black", "White", 3])
+    player_2 = Player("White", False, "random", ["White"])
 
     # player_1 = Player("Black", True)
     # player_2 = Player("White", True)

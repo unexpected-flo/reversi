@@ -1,5 +1,6 @@
 import rules
 from random import randint
+from copy import deepcopy
 
 
 class RandomAi:
@@ -11,27 +12,58 @@ class RandomAi:
         selected_move = randint(0, len(pot_moves)-1)
         return pot_moves[selected_move]
 
-class Minmax:
-    def __init__(self, color, depth=3):
+
+class Minimax:
+    def __init__(self, color, opponent, depth=3):
         self.color = color
         self.depth = depth
+        self.opponent = opponent
 
     def evaluate_position(self, board):
-        scores = {self.color: 0, "opponent": 0}
+        scores = {self.color: 0, self.opponent: 0}
         for line in board.tiles:
             for tile in line:
                 if tile is not None:
                     if tile == self.color:
-                        scores[self.color] += 1
-                    else:
-                        scores["opponent"] += 1
-        return scores[self.color] - scores["opponent"]
+                        scores[tile] += 1
+
+        return scores[self.color] - scores[self.opponent]
+
+    def minimax(self, board, player, depth, alpha, beta):
+        best_plays = []
+        if rules.check_game_over(board, self.color, self.opponent) or depth == 0:
+            return self.evaluate_position(board), best_plays
+        if player == self.color:
+            score = float("-inf")
+            for play in rules.find_all_moves(board, player):
+                tmp_brd = deepcopy(board)
+                rules.execute_move(*play, tmp_brd, self.color)
+                tmp_score = self.minimax(tmp_brd, self.opponent, depth-1, alpha, beta)[0]
+                if tmp_score >= score:
+                    score = tmp_score
+                    if depth == self.depth:
+                        print("all moves ", rules.find_all_moves(board, player))
+                        best_plays.append(play)
+                alpha = max(alpha, score)
+                if score >= beta:
+                    break
+            return score, best_plays
+        elif player == self.opponent:
+            score = float("inf")
+            for play in rules.find_all_moves(board, player):
+                tmp_brd = deepcopy(board)
+                rules.execute_move(*play, tmp_brd, self.opponent)
+                score = min(score, self.minimax(tmp_brd, self.color, depth-1, alpha, beta)[0])
+                beta = min(beta, score)
+                if score <= alpha:
+                    break
+            return score, best_plays
 
     def play(self, board):
+        _, plays = self.minimax(board, self.color, self.depth, float("-inf"), float("inf"))
+        print("best_plays", plays)
+        choice = randint(0, len(plays)-1)
+        return plays[choice]
 
-        return
 
-
-
-
-ai_types = {"random": RandomAi}
+ai_types = {"random": RandomAi, "minimax": Minimax}
