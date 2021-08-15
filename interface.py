@@ -6,21 +6,22 @@ white_pawn = "./white_pawn.png"
 empty = "./blank.png"
 images = {"White": white_pawn, "Black": black_pawn, None: empty}
 
+
 def draw_cli_board(board):
     cli = {None: " ", "White": "W", "Black": "B"}
     for line in board.tiles:
         line_display = [cli[tile] for tile in line]
         print(line_display)
 
+
 alphabet = string.ascii_uppercase
-even_color = '#B58863'
-odd_color = '#F0D9B5'
+
 
 def redraw_board(window, board):
     size = board.size
     for i in range(size):
         for j in range(size):
-            color = even_color if (i + j) % 2 else odd_color
+            color = "#0C702C"
             piece_image = images[board.tiles[i][j]]
             elem = window.FindElement(key=(i, j))
             elem.Update(button_color=('white', color),
@@ -33,8 +34,8 @@ def create_window(game_name, size, board):
     for i in range(size):
         row = []
         for j in range(size):
-            color = even_color if (i + j) % 2 else odd_color
-            row.append(sg.RButton(' ', size=(8, 4), key=(i, j), pad=(0, 0), button_color=('white', color)))
+            color = "#0C702C"
+            row.append(sg.RButton(' ', size=(8, 4), key=(i, j), pad=(0, 0), border_width=5, button_color=('white', color)))
         row.append(sg.T(str(size - i) + '   ', pad=((23, 0), 0), font='Any 13'))
         layout.append(row)
 

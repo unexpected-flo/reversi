@@ -99,7 +99,7 @@ class Game:
 if __name__ == "__main__":
     player_1 = Player("Black", False, "minimax", ["Black", "White", 3])
     # player_1 = Player("Black", False, "random", ["Black"])
-    player_2 = Player("White", False, "random", ["White"])
+    player_2 = Player("White", True, "random", ["White"])
 
     # player_1 = Player("Black", True)
     # player_2 = Player("White", True)
@@ -109,7 +109,7 @@ if __name__ == "__main__":
     #     game = Game([player_1, player_2], user_interface="None")
     #     result = game.play()
     #     winners[result] += 1
-    # print(winners)
+    #     print(winners)
 
-    game = Game([player_1, player_2], user_interface="None")
+    game = Game([player_1, player_2], user_interface="gui")
     result = game.play()

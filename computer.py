@@ -71,6 +71,10 @@ class Minimax:
         return plays[choice]
 
 
+class MCTS:
+    def __init__(self):
+        pass
+
 ai_types = {"random": RandomAi, "minimax": Minimax}
 # Minimax (v1) depth 3 vs random {'Black': 624, 'White': 344, 'Draw': 32}
 # Minimax (v2) depth 3 vs random {'Black': 771, 'White': 195, 'Draw': 34}
