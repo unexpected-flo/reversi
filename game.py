@@ -98,10 +98,18 @@ class Game:
 
 if __name__ == "__main__":
     player_1 = Player("Black", False, "minimax", ["Black", "White", 3])
+    # player_1 = Player("Black", False, "random", ["Black"])
     player_2 = Player("White", False, "random", ["White"])
 
     # player_1 = Player("Black", True)
     # player_2 = Player("White", True)
 
-    game = Game([player_1, player_2], user_interface="gui")
-    game.play()
+    # winners = {"Black":0, "White":0, "Draw":0}
+    # for _ in range(1000):
+    #     game = Game([player_1, player_2], user_interface="None")
+    #     result = game.play()
+    #     winners[result] += 1
+    # print(winners)
+
+    game = Game([player_1, player_2], user_interface="None")
+    result = game.play()

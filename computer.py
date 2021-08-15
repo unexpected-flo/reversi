@@ -24,8 +24,7 @@ class Minimax:
         for line in board.tiles:
             for tile in line:
                 if tile is not None:
-                    if tile == self.color:
-                        scores[tile] += 1
+                    scores[tile] += 1
 
         return scores[self.color] - scores[self.opponent]
 
@@ -42,7 +41,7 @@ class Minimax:
                 if tmp_score >= score:
                     score = tmp_score
                     if depth == self.depth:
-                        print("all moves ", rules.find_all_moves(board, player))
+                        # print("all moves ", rules.find_all_moves(board, player))
                         best_plays.append(play)
                 alpha = max(alpha, score)
                 if score >= beta:
@@ -61,9 +60,11 @@ class Minimax:
 
     def play(self, board):
         _, plays = self.minimax(board, self.color, self.depth, float("-inf"), float("inf"))
-        print("best_plays", plays)
+        # print("best_plays", plays)
         choice = randint(0, len(plays)-1)
         return plays[choice]
 
 
 ai_types = {"random": RandomAi, "minimax": Minimax}
+# Minimax depth 3 vs random {'Black': 624, 'White': 344, 'Draw': 32}
+# random vs random {'Black': 463, 'White': 500, 'Draw': 37}
